@@ -1,9 +1,12 @@
 # HPP:
 #-----
+version.hpp
+
 log/log.hpp
 
 core/algo.hpp
 core/default_arg.hpp
+core/random.hpp
 
 vec2/vec2i.hpp
 vec2/vec2u.hpp
@@ -41,6 +44,7 @@ game/game.hpp
 # CPP:
 #-----
 core/algo.cpp
+core/random.cpp
 direction/direction.cpp
 grid/exploration/spread_exploration.cpp
 grid/grid_algo.cpp
