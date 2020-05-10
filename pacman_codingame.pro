@@ -5,6 +5,7 @@ CONFIG -= qt
 
 SOURCES += \
         core/algo.cpp \
+        core/random.cpp \
         direction/direction.cpp \
         game/action.cpp \
         game/game.cpp \
@@ -23,6 +24,7 @@ SOURCES += \
 HEADERS += \
     core/algo.hpp \
     core/default_arg.hpp \
+    core/random.hpp \
     direction/direction.hpp \
     direction/neighbourhood.hpp \
     game/action.hpp \
@@ -51,7 +53,8 @@ HEADERS += \
     grid/neighbourhood.hpp \
     log/log.hpp \
     vec2/vec2i.hpp \
-    vec2/vec2u.hpp
+    vec2/vec2u.hpp \
+    version.hpp
 
 DISTFILES += \
     catlist.txt
