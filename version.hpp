@@ -1,4 +1,3 @@
-#ifndef VERSION_HPP
-#define VERSION_HPP
+#pragma once
 
-#endif // VERSION_HPP
+inline const char* version = "one action for everyone. v4";
