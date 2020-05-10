@@ -35,6 +35,7 @@ game/world.hpp
 game/turn_info.hpp
 game/pacman.hpp
 game/player.hpp
+game/action.hpp
 game/game.hpp
 
 # CPP:
@@ -54,6 +55,7 @@ game/turn_info.cpp
 game/game.cpp
 game/pacman.cpp
 game/player.cpp
+game/action.cpp
 
 # main:
 main.cpp

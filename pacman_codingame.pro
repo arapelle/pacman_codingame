@@ -6,6 +6,7 @@ CONFIG -= qt
 SOURCES += \
         core/algo.cpp \
         direction/direction.cpp \
+        game/action.cpp \
         game/game.cpp \
         game/pacman.cpp \
         game/player.cpp \
@@ -24,6 +25,7 @@ HEADERS += \
     core/default_arg.hpp \
     direction/direction.hpp \
     direction/neighbourhood.hpp \
+    game/action.hpp \
     game/game.hpp \
     game/pacman.hpp \
     game/player.hpp \

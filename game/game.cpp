@@ -1,4 +1,5 @@
 #include "game.hpp"
+#include "action.hpp"
 #include "turn_info.hpp"
 #include "grid/grid_algo.hpp"
 
@@ -40,17 +41,17 @@ void Game::send_actions_()
     // To debug: cerr << "Debug messages..." << endl;
     // output_ << "MOVE 0 15 10" << std::endl; // MOVE <pacId> <x> <y>
 
+    Action_sequence action_sequence;
     Position_set pset = find_all_positions_if(world_, &square_has_big_pellet);
     if (pset.size())
     {
-        output_ << "MOVE " << avatar_.pacmans().front().id() << " " << *pset.begin() << std::endl; // MOVE <pacId> <x> <y>
+        action_sequence.add_action<Move>(avatar_.pacmans().front(), *pset.begin());
     }
     else
     {
         auto iter = std::find_if(world_.begin(), world_.end(), &square_has_pellet);
         if (iter != world_.end())
-        {
-            output_ << "MOVE " << avatar_.pacmans().front().id() << " " << iter.position() << std::endl; // MOVE <pacId> <x> <y>
-        }
+            action_sequence.add_action<Move>(avatar_.pacmans().front(), iter.position());
     }
+    output_ << action_sequence << std::endl;
 }
