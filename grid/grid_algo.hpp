@@ -9,6 +9,8 @@ class Position_set : public std::set<Position>
 {
 public:
     using std::set<Position>::set;
+
+    const Position& nth(std::size_t i) const { return *std::next(begin(), i); }
 };
 
 bool includes(const Position_set& includer, const Position_set& included);
