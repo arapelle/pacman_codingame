@@ -7,6 +7,9 @@ SOURCES += \
         core/algo.cpp \
         direction/direction.cpp \
         game/game.cpp \
+        game/square.cpp \
+        game/turn_info.cpp \
+        game/world.cpp \
         grid/exploration/spread_exploration.cpp \
         grid/grid_algo.cpp \
         grid/grid_base.cpp \
@@ -20,6 +23,9 @@ HEADERS += \
     direction/direction.hpp \
     direction/neighbourhood.hpp \
     game/game.hpp \
+    game/square.hpp \
+    game/turn_info.hpp \
+    game/world.hpp \
     grid/exploration/direction_to.hpp \
     grid/exploration/exploration_rules/decorator/torus.hpp \
     grid/exploration/exploration_rules/directions4_exploration_rules.hpp \

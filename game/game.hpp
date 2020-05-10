@@ -1,6 +1,9 @@
 #pragma once
 
+#include "world.hpp"
 #include <iostream>
+
+class Turn_info;
 
 class Game
 {
@@ -13,8 +16,12 @@ public:
 
     // Turn:
     void play_turn();
+private:
+    void update_data_(const Turn_info& turn_info);
+    void send_actions_();
 
 private:
     std::istream& input_;
     std::ostream& output_;
+    World world_;
 };

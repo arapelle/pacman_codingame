@@ -6,6 +6,8 @@
 
 //--------------------------------------------------------------------------------
 
+namespace test
+{
 using Direction4_mark = Forward_step_mark<Direction4, Distance_mark<>>;
 
 class Square
@@ -47,4 +49,5 @@ void compilation_test()
     reachable_squares(cworld, start, exploration_rules, acc_test, 2);
     reachable_positions(world, start, exploration_rules, acc_test, 2);
     direction_to(world, start, dest, exploration_rules, acc_test);
+}
 }

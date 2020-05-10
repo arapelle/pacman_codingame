@@ -168,4 +168,7 @@ public:
 
 //---------------------------------------------------
 
+namespace test
+{
 void compilation_test();
+}
