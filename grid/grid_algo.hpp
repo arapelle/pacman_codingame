@@ -37,31 +37,31 @@ std::size_t count_if(const GridType& grid, Predicate pred)
 
 // replace:
 template <typename GridType, typename ValueType>
-void replace(const GridType& grid, const ValueType& value, const ValueType& new_value)
+void replace(GridType& grid, const ValueType& value, const ValueType& new_value)
 {
     std::replace(grid.begin(), grid.end(), value, new_value);
 }
 
 // replace_if:
 template <typename GridType, typename Predicate, typename ValueType>
-void replace_if(const GridType& grid, Predicate pred, const ValueType& new_value)
+void replace_if(GridType& grid, Predicate pred, const ValueType& new_value)
 {
     std::replace_if(grid.begin(), grid.end(), std::move(pred), new_value);
 }
 
 // for_each:
 template <typename GridType, typename Function>
-void for_each(const GridType& grid, Function func)
+void for_each(GridType& grid, Function func)
 {
     std::for_each(grid.begin(), grid.end(), std::move(func));
 }
 
 // for_each_if:
 template <typename GridType, typename Predicate, typename Function>
-void for_each_if(const GridType& grid, Predicate pred, Function func)
+void for_each_if(GridType& grid, Predicate pred, Function func)
 {
     using Value_type = typename GridType::Value_type;
-    std::for_each(grid.begin(), grid.end(), [&](const Value_type& val){ if (pred(val)) func(val); });
+    std::for_each(grid.begin(), grid.end(), [&](Value_type& val){ if (pred(val)) func(val); });
 }
 
 // find_all:

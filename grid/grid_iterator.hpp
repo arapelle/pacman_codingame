@@ -1,11 +1,22 @@
 #pragma once
 
 #include "grid_types.hpp"
+#include <iterator>
+#include <type_traits>
 
 template <typename GridPointer>
 class Grid_iterator
 {
 public:
+    using Grid_type = std::remove_reference_t<decltype(*std::declval<GridPointer>())>;
+    using Value_type = typename Grid_type::Value_type;
+    // standard compliance:
+    using difference_type = int;
+    using value_type = Value_type;
+    using pointer = std::add_pointer_t<value_type>;
+    using reference = std::add_lvalue_reference_t<value_type>;
+    using iterator_category = std::bidirectional_iterator_tag;
+
     Grid_iterator(GridPointer grid_ptr, const Position& pos)
         : grid_ptr_(grid_ptr), pos_(pos)
     {}

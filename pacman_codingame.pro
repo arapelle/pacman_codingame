@@ -7,6 +7,8 @@ SOURCES += \
         core/algo.cpp \
         direction/direction.cpp \
         game/game.cpp \
+        game/pacman.cpp \
+        game/player.cpp \
         game/square.cpp \
         game/turn_info.cpp \
         game/world.cpp \
@@ -23,6 +25,8 @@ HEADERS += \
     direction/direction.hpp \
     direction/neighbourhood.hpp \
     game/game.hpp \
+    game/pacman.hpp \
+    game/player.hpp \
     game/square.hpp \
     game/turn_info.hpp \
     game/world.hpp \
