@@ -33,12 +33,13 @@ grid/exploration/exploration_rules/directions4_exploration_rules.hpp
 grid/exploration/exploration_rules/torus_directions4_exploration_rules.hpp
 
 # game:
+game/pacman_type.hpp
+game/action.hpp
 game/square.hpp
 game/world.hpp
 game/turn_info.hpp
 game/pacman.hpp
 game/player.hpp
-game/action.hpp
 game/game.hpp
 
 # CPP:
@@ -60,6 +61,7 @@ game/game.cpp
 game/pacman.cpp
 game/player.cpp
 game/action.cpp
+game/pacman_type.cpp
 
 # main:
 main.cpp

@@ -1,5 +1,6 @@
 Todo:
 =====
+(.Pacman::Type -> Pacman_type)
 (.Pacman::Strategy)
 
 Done:

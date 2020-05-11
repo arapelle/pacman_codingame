@@ -5,6 +5,7 @@
 #include <iostream>
 
 class Turn_info;
+class Action_sequence;
 
 class Game
 {
@@ -28,6 +29,9 @@ public:
 private:
     void update_from_turn_info_(const Turn_info& turn_info);
     void send_actions_();
+    void assign_actions_();
+    std::size_t assign_speed_action_();
+    std::size_t assign_move_action_(std::vector<World::Iterator> square_iters);
 
 private:
     std::istream& input_;

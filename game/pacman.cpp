@@ -38,10 +38,14 @@ bool Pacman::has_destination() const
 void Pacman::update_from_pacman_info(const Pacman_info& pacman_info)
 {
     id_ = pacman_info.pac_id;
+
     previous_position_ = position_;
     position_ = Position(pacman_info.x, pacman_info.y);
-    if (is_mine() && position_ == previous_position_)
+    Move* move_action = dynamic_cast<Move*>(action_todo_.get());
+    if (is_mine() && position_ == previous_position_ && move_action)
         destination_ = bad_position;
+    action_todo_ = nullptr;
+
     if (pacman_info.type_id == "ROCK")
         type_ = Type::Rock;
     else if (pacman_info.type_id == "PAPER")
@@ -53,20 +57,7 @@ void Pacman::update_from_pacman_info(const Pacman_info& pacman_info)
         error() << "Unknown type!" << std::endl;
         exit(-1);
     }
+
     speed_turns_left_ = pacman_info.speed_turns_left;
     ability_cooldown_ = pacman_info.ability_cooldown;
-}
-
-//-----
-
-std::string_view to_string(const Pacman::Type& type)
-{
-    switch (type)
-    {
-    case Pacman::Type::Rock: return "ROCK";
-    case Pacman::Type::Paper: return "PAPER";
-    case Pacman::Type::Scissors: return "SCISSORS";
-    }
-    error() << "Unknown type!" << std::endl;
-    return "Unknown";
 }

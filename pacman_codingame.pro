@@ -10,6 +10,7 @@ SOURCES += \
         game/action.cpp \
         game/game.cpp \
         game/pacman.cpp \
+        game/pacman_type.cpp \
         game/player.cpp \
         game/square.cpp \
         game/turn_info.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     game/action.hpp \
     game/game.hpp \
     game/pacman.hpp \
+    game/pacman_type.hpp \
     game/player.hpp \
     game/square.hpp \
     game/turn_info.hpp \

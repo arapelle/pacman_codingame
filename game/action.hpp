@@ -1,11 +1,13 @@
 #pragma once
 
-#include "pacman.hpp"
+#include "pacman_type.hpp"
 #include "grid/grid_types.hpp"
 #include <sstream>
 #include <ostream>
 #include <vector>
 #include <memory>
+
+class Pacman;
 
 class Action
 {
@@ -28,6 +30,7 @@ public:
 private:
     std::ostringstream msg_stream_;
 };
+using Action_sptr = std::shared_ptr<Action>;
 
 class Pacman_action : public Action
 {
@@ -68,12 +71,12 @@ class Switch : public Pacman_action
 public:
     inline constexpr static std::string_view label = "SWITCH";
 
-    explicit Switch(const Pacman& pacman, Pacman::Type new_type);
+    explicit Switch(const Pacman& pacman, Pacman_type new_type);
     virtual ~Switch() override;
     virtual std::ostream& write_to_stream(std::ostream& stream) const override;
 
 private:
-    Pacman::Type new_type_;
+    Pacman_type new_type_;
 };
 
 class Action_sequence : public Action
@@ -81,23 +84,23 @@ class Action_sequence : public Action
 public:
     virtual ~Action_sequence();
 
-    Action& add_action(std::unique_ptr<Action> action_uptr);
+    Action& add_action(std::shared_ptr<Action> action_sptr);
 
     template <typename Action, typename... Args>
     Action& add_action(Args&&... args)
     {
-        auto action_uptr = std::make_unique<Action>(std::forward<Args>(args)...);
-        Action& action_ref = *action_uptr;
-        actions_.push_back(std::move(action_uptr));
+        auto action_sptr = std::make_shared<Action>(std::forward<Args>(args)...);
+        Action& action_ref = *(action_sptr.get());
+        actions_.push_back(std::move(action_sptr));
         return action_ref;
     }
 
-    inline const auto& actions() const { return actions_; }
+    inline const std::vector<Action_sptr>& actions() const { return actions_; }
 
     virtual std::ostream& write_to_stream(std::ostream& stream) const override;
 
 private:
-    std::vector<std::unique_ptr<Action>> actions_;
+    std::vector<Action_sptr> actions_;
 };
 
 std::ostream& operator<<(std::ostream& stream, const Action_sequence& action_sequence);

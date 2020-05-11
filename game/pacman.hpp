@@ -1,5 +1,7 @@
 #pragma once
 
+#include "action.hpp"
+#include "pacman_type.hpp"
 #include "grid/grid_types.hpp"
 #include <cassert>
 
@@ -10,14 +12,7 @@ class Pacman_info;
 class Pacman
 {
 public:
-    enum class Type : uint8_t
-    {
-        Rock,
-        Paper,
-        Scissors,
-    };
-
-public:
+    using Type = Pacman_type;
     inline static Position bad_position = Position(-1,-1);
 
     explicit Pacman(Player& owner);
@@ -46,6 +41,16 @@ public:
     bool has_destination() const;
     inline const Position& destination() const { return destination_; }
     inline void set_destination(const Position& position) { destination_ = position; }
+    inline bool has_action_todo() const { return action_todo_ != nullptr; }
+    inline Action_sptr action_todo() const { return action_todo_; }
+    template <typename Action, typename... Args>
+    Action& set_action_todo(Args&&... args)
+    {
+        auto action_sptr = std::make_shared<Action>(std::forward<Args>(args)...);
+        Action& action_ref = *(action_sptr.get());
+        action_todo_ = std::move(action_sptr);
+        return action_ref;
+    }
 
     void update_from_pacman_info(const Pacman_info& pacman_info);
 
@@ -59,6 +64,5 @@ private:
     int ability_cooldown_; // unused in wood leagues
 
     Position destination_;
+    Action_sptr action_todo_;
 };
-
-std::string_view to_string(const Pacman::Type& type);

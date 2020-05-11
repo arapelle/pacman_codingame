@@ -52,7 +52,7 @@ std::ostream& Speed::write_to_stream(std::ostream& stream) const
 
 // Switch:
 
-Switch::Switch(const Pacman& pacman, Pacman::Type new_type)
+Switch::Switch(const Pacman& pacman, Pacman_type new_type)
     : Pacman_action(pacman), new_type_(new_type)
 {}
 
@@ -67,9 +67,9 @@ std::ostream& Switch::write_to_stream(std::ostream& stream) const
 
 Action_sequence::~Action_sequence() {}
 
-Action& Action_sequence::add_action(std::unique_ptr<Action> action_uptr)
+Action& Action_sequence::add_action(std::shared_ptr<Action> action_sptr)
 {
-    actions_.push_back(std::move(action_uptr));
+    actions_.push_back(std::move(action_sptr));
     return *actions_.back();
 }
 

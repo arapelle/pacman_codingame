@@ -54,83 +54,87 @@ void Game::update_from_turn_info_(const Turn_info& turn_info)
 void Game::send_actions_()
 {
     trace();
-    Action_sequence action_sequence;
-
     // Write an action using cout. DON'T FORGET THE "<< endl"
     // To debug: cerr << "Debug messages..." << endl;
     // output_ << "MOVE 0 15 10" << std::endl; // MOVE <pacId> <x> <y>
+    assign_actions_();
 
+    Action_sequence action_sequence;
     for (const Pacman& pacman : avatar_.active_pacmans())
-        if (pacman.is_ability_available())
-            action_sequence.add_action<Speed>(pacman) << pacman.destination();
-    if (action_sequence.actions().size() > 0)
-    {
-        output_ << action_sequence << std::endl;
+        if (Action_sptr action_sptr = pacman.action_todo(); action_sptr)
+            action_sequence.add_action(std::move(action_sptr));
+    output_ << action_sequence << std::endl;
+}
+
+void Game::assign_actions_()
+{
+    std::size_t count = 0;
+    std::size_t pacman_count = avatar_.active_pacmans().size();
+
+    count += assign_speed_action_();
+    debug() << "Assign speed: " << count << std::endl;
+    if (count == pacman_count)
         return;
+
+    count += assign_move_action_(world_.big_pellets_iters());
+    debug() << "Assign move to big pellet: " << count << std::endl;
+    if (count == pacman_count)
+        return;
+
+    count += assign_move_action_(world_.small_pellets_iters());
+    debug() << "Assign move to small pellet: " << count << std::endl;
+    if (count == pacman_count)
+        return;
+
+    count += assign_move_action_(find_all_if(world_, &square_is_place));
+    debug() << "Assign move to square: " << count << std::endl;
+}
+
+std::size_t Game::assign_speed_action_()
+{
+    std::size_t count = 0;
+
+    for (Pacman& pacman : avatar_.active_pacmans())
+    {
+        if (pacman.has_action_todo())
+            continue;
+
+        if (pacman.is_ability_available())
+        {
+            pacman.set_action_todo<Speed>(pacman) << pacman.destination();
+            ++count;
+        }
     }
 
-    debug() << "go to big!" << std::endl;
+    return count;
+}
 
-    auto big_pellet_iters = world_.big_pellets_iters();
-    std::shuffle(big_pellet_iters.begin(), big_pellet_iters.end(), rand_int_engine());
-    unsigned number_of_moves_to_big_pellet = std::min<unsigned>(avatar_.active_pacmans().size(), big_pellet_iters.size());
-    auto pacman_iter = avatar_.active_pacmans().begin();
-    auto big_pellet_iter = big_pellet_iters.begin();
+std::size_t Game::assign_move_action_(std::vector<World::Iterator> square_iters)
+{
+    trace();
+    std::size_t count = 0;
 
-    for (auto pacman_end_iter = std::next(pacman_iter, number_of_moves_to_big_pellet);
-         pacman_iter != pacman_end_iter;
-         ++pacman_iter)
+    std::shuffle(square_iters.begin(), square_iters.end(), rand_int_engine());
+
+    auto square_iter = square_iters.begin();
+    for (Pacman& pacman : avatar_.active_pacmans())
     {
-        Pacman& pacman = *pacman_iter;
+        debug() << "pacman: " << pacman.char_id() << std::endl;
+        if (pacman.has_action_todo())
+            continue;
+
+        if (square_iter == square_iters.end())
+            break;
+
         if (!pacman.has_destination())
         {
-            pacman.set_destination(big_pellet_iter->position());
-            ++big_pellet_iter;
+            pacman.set_destination(square_iter->position());
+            ++square_iter;
         }
         assert(pacman.has_destination());
-        action_sequence.add_action<Move>(pacman, pacman.destination()) << pacman.destination();
+        pacman.set_action_todo<Move>(pacman, pacman.destination()) << pacman.destination();
+        ++count;
     }
 
-    debug() << "go to small!" << std::endl;
-
-//    debug() << "find_all_if()" << std::endl;
-    auto viter = world_.small_pellets_iters();
-//    debug() << "shuffle()" << std::endl;
-    std::shuffle(viter.begin(), viter.end(), rand_int_engine());
-    auto sqiter_iter = viter.begin();
-//    debug() << "start loop" << std::endl;
-    for (auto pacman_end_iter = avatar_.active_pacmans().end();
-         pacman_iter != pacman_end_iter;
-         ++pacman_iter)
-    {
-        Pacman& pacman = *pacman_iter;
-        info() << pacman.id() << ",";
-        if (pacman.has_destination())
-        {
-            action_sequence.add_action<Move>(*pacman_iter, pacman.destination()) << pacman.destination();
-            continue;
-        }
-
-        Position destination(-1,-1);
-        if (sqiter_iter != viter.end())
-        {
-            destination = sqiter_iter->position();
-            action_sequence.add_action<Move>(*pacman_iter, destination) << pacman.destination();
-            ++sqiter_iter;
-        }
-        else
-        {
-            auto iter = std::find_if(world_.begin(), world_.end(), &square_is_place);
-            if (iter == world_.end())
-            {
-                error() << "oO: Whut?! No more free square?!" << std::endl;
-                break;
-            }
-            destination = iter.position();
-            action_sequence.add_action<Move>(*pacman_iter, destination) << pacman.destination();
-        }
-        pacman.set_destination(destination);
-    }
-
-    output_ << action_sequence << std::endl;
+    return count;
 }
