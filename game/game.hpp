@@ -11,6 +11,11 @@ class Game
 public:
     Game(std::istream& input = std::cin, std::ostream& output = std::cout);
 
+    const Avatar& avatar() const { return avatar_; };
+    Avatar& avatar() { return avatar_; };
+    const Opponent& opponent() const { return opponent_; }
+    Opponent& opponent() { return opponent_; }
+
     // Start:
     void init();
     void play_start_actions();
