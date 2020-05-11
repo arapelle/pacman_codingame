@@ -1,11 +1,15 @@
 #pragma once
 
+#include <cstddef>
+
 enum Pellet : int
 {
     No_pellet = 0,
     Small_pellet = 1,
     Big_pellet = 10,
 };
+
+class Pacman;
 
 class Square
 {
@@ -26,9 +30,18 @@ public:
     inline bool has_pellet() const { return pellet_ > 0; }
     inline void set_pellet(Pellet pellet) { pellet_ = pellet; }
 
+    inline const Pacman* pacman() const { return pacman_; }
+    inline Pacman* pacman() { return pacman_; }
+
+private:
+    friend class World;
+    void set_pacman(std::nullptr_t) { pacman_ = nullptr; }
+    void set_pacman(Pacman& pacman) { pacman_ = &pacman; }
+
 private:
     Type type_;
     Pellet pellet_;
+    Pacman* pacman_ = nullptr;
 };
 
 inline bool square_is_free(const Square& square) { return square.is_free(); }
