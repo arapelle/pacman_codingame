@@ -17,7 +17,7 @@ public:
     using reference = std::add_lvalue_reference_t<value_type>;
     using iterator_category = std::bidirectional_iterator_tag;
 
-    Grid_iterator(GridPointer grid_ptr, const Position& pos)
+    Grid_iterator(GridPointer grid_ptr = nullptr, const Position& pos = Position())
         : grid_ptr_(grid_ptr), pos_(pos)
     {}
 
