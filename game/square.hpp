@@ -1,9 +1,11 @@
 #pragma once
 
-using Pellet = int;
-inline constexpr Pellet big_pellet = 10;
-inline constexpr Pellet small_pellet = 1;
-inline constexpr Pellet no_pellet = 0;
+enum Pellet : int
+{
+    No_pellet = 0,
+    Small_pellet = 1,
+    Big_pellet = 10,
+};
 
 class Square
 {
@@ -30,6 +32,6 @@ private:
 };
 
 inline bool square_is_free(const Square& square) { return square.is_free(); }
-inline bool square_has_big_pellet(const Square& square) { return square.pellet() == big_pellet; }
-inline bool square_has_small_pellet(const Square& square) { return square.pellet() == small_pellet; }
+inline bool square_has_big_pellet(const Square& square) { return square.pellet() == Big_pellet; }
+inline bool square_has_small_pellet(const Square& square) { return square.pellet() == Small_pellet; }
 inline bool square_has_pellet(const Square& square) { return square.has_pellet(); }

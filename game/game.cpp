@@ -40,9 +40,11 @@ void Game::play_turn()
 
 void Game::update_from_turn_info_(const Turn_info& turn_info)
 {
-    world_.update_from_turn_info(turn_info);
+    // Update players,
     avatar_.update_from_turn_info(turn_info);
     opponent_.update_from_turn_info(turn_info);
+    // THEN update world.
+    world_.update_from_turn_info(turn_info);
 }
 
 void Game::send_actions_()

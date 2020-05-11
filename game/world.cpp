@@ -29,7 +29,7 @@ void World::read_from_stream(std::istream& stream)
 
 void World::update_from_turn_info(const Turn_info& turn_info)
 {
-    for_each_if(*this, &square_is_free, [](Square& square){ square.set_pellet(no_pellet); });
+    for_each_if(*this, &square_is_free, [](Square& square){ square.set_pellet(No_pellet); });
     for (Pellet_info pellet_info : turn_info.pellet_infos)
-        get(pellet_info.x, pellet_info.y).set_pellet(pellet_info.value);
+        get(pellet_info.x, pellet_info.y).set_pellet(static_cast<Pellet>(pellet_info.value));
 }
