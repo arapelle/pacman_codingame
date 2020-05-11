@@ -20,6 +20,8 @@ public:
     inline const Game& game() const { assert(game_); return *game_; }
     inline Game& game() { assert(game_); return *game_; }
     inline void set_game(Game& game) { game_ = &game; }
+    inline const std::vector<Iterator>& big_pellets_iters() const { return big_pellets_iters_; }
+    inline const std::vector<Iterator>& small_pellets_iters() const { return small_pellets_iters_; }
 
     void update_from_turn_info(const Turn_info& turn_info);
 
@@ -33,4 +35,6 @@ public:
 
 private:
     Game* game_ = nullptr;
+    std::vector<Iterator> small_pellets_iters_;
+    std::vector<Iterator> big_pellets_iters_;
 };

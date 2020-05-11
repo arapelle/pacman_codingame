@@ -35,29 +35,33 @@ void World::read_from_stream(std::istream& stream)
 void World::update_from_turn_info(const Turn_info& turn_info)
 {
     remove_all_big_pellet_();
-    //TODO Improve:{
     for (auto& square : *this)
         square.set_pacman(nullptr);
-    //}
 
     Opponent& opponent = game().opponent();
     for (Pacman& pacman : opponent.pacmans())
     {
-        // TODO get(pacman.previous_position()).set_pacman(nullptr);
         if (contains(pacman.position()))
             get(pacman.position()).set_pacman(pacman);
     }
 
     Avatar& avatar = game().avatar();
-    for (Pacman& pacman : avatar.pacmans())
+    for (Pacman& pacman : avatar.active_pacmans())
     {
-        // TODO get(pacman.previous_position()).set_pacman(nullptr);
         get(pacman.position()).set_pacman(pacman);
         remove_all_pellet_around_pacman_(pacman);
     }
 
-    for (Pellet_info pellet_info : turn_info.pellet_infos)
-        get(pellet_info.x, pellet_info.y).set_pellet(static_cast<Pellet>(pellet_info.value));
+    big_pellets_iters_.clear();
+    for (const Pellet_info& pellet_info : turn_info.pellet_infos)
+    {
+        Iterator iter = make_iterator(Position(pellet_info.x, pellet_info.y));
+        Pellet pellet = static_cast<Pellet>(pellet_info.value);
+        if (pellet == Big_pellet)
+            big_pellets_iters_.push_back(iter);
+        iter->set_pellet(pellet);
+    }
+    small_pellets_iters_ = find_all_if(*this, &square_has_small_pellet);
 }
 
 void World::remove_all_pellet_()

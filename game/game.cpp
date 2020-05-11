@@ -71,10 +71,11 @@ void Game::send_actions_()
 
     debug() << "go to big!" << std::endl;
 
-    Position_set pos_set = find_all_positions_if(world_, &square_has_big_pellet);
-    unsigned number_of_moves_to_big_pellet = std::min<unsigned>(avatar_.active_pacmans().size(), pos_set.size());
+    auto big_pellet_iters = world_.big_pellets_iters();
+    std::shuffle(big_pellet_iters.begin(), big_pellet_iters.end(), rand_int_engine());
+    unsigned number_of_moves_to_big_pellet = std::min<unsigned>(avatar_.active_pacmans().size(), big_pellet_iters.size());
     auto pacman_iter = avatar_.active_pacmans().begin();
-    auto pos_iter = pos_set.begin();
+    auto big_pellet_iter = big_pellet_iters.begin();
 
     for (auto pacman_end_iter = std::next(pacman_iter, number_of_moves_to_big_pellet);
          pacman_iter != pacman_end_iter;
@@ -83,8 +84,8 @@ void Game::send_actions_()
         Pacman& pacman = *pacman_iter;
         if (!pacman.has_destination())
         {
-            pacman.set_destination(*pos_iter);
-            ++pos_iter;
+            pacman.set_destination(big_pellet_iter->position());
+            ++big_pellet_iter;
         }
         assert(pacman.has_destination());
         action_sequence.add_action<Move>(pacman, pacman.destination()) << pacman.destination();
@@ -93,7 +94,7 @@ void Game::send_actions_()
     debug() << "go to small!" << std::endl;
 
 //    debug() << "find_all_if()" << std::endl;
-    auto viter = find_all_if(world_, &square_has_pellet);
+    auto viter = world_.small_pellets_iters();
 //    debug() << "shuffle()" << std::endl;
     std::shuffle(viter.begin(), viter.end(), rand_int_engine());
     auto sqiter_iter = viter.begin();

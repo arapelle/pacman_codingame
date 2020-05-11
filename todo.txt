@@ -1,7 +1,10 @@
 Todo:
 =====
-.Player::active_pacmans_,::pacmans_
-.Player::previous_position_
-.Improve World replace pacman
-.World::big_pellets_,::small_pellets_
 (.Pacman::Strategy)
+
+Done:
+=====
+.World::big_pellets_,::small_pellets_
+.Player::active_pacmans_,::pacmans_
+.Pacman::previous_position_
+.Action::message_

@@ -1,3 +1,3 @@
 #pragma once
 
-inline const char* version = "v30.dev: Destination is displayed above a pacman.";
+inline const char* version = "v31.dev: World contains iterators to big and small pellets.";
