@@ -11,6 +11,8 @@ class Game
 public:
     Game(std::istream& input = std::cin, std::ostream& output = std::cout);
 
+    const World& world() const { return world_; }
+    World& world() { return world_; }
     const Avatar& avatar() const { return avatar_; };
     Avatar& avatar() { return avatar_; };
     const Opponent& opponent() const { return opponent_; }
@@ -33,4 +35,5 @@ private:
     World world_;
     Avatar avatar_;
     Opponent opponent_;
+    unsigned turn_number_;
 };

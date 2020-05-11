@@ -1,3 +1,3 @@
 #pragma once
 
-inline const char* version = " dev(v12) Use Speed action.";
+inline const char* version = " debug(v23) Pacman keep destination in memory.";

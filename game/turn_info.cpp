@@ -16,6 +16,11 @@ void Pellet_info::read_from_stream(std::istream& stream)
 
 // Turn_info:
 
+Turn_info::Turn_info(unsigned turn_number)
+    : turn_number(turn_number)
+{
+}
+
 void Turn_info::read_from_stream(std::istream& stream)
 {
     stream >> my_score >> opponent_score; stream.ignore();

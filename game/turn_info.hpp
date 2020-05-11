@@ -30,8 +30,13 @@ public:
 class Turn_info
 {
 public:
+    inline constexpr static unsigned first_turn_turn = 1;
+
+    explicit Turn_info(unsigned turn_number);
+    inline bool is_first_turn() const { return turn_number == first_turn_turn; }
     void read_from_stream(std::istream& stream);
 
+    unsigned turn_number;
     int my_score;
     int opponent_score;
     std::vector<Pacman_info> pacman_infos;
