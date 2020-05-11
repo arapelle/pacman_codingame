@@ -19,6 +19,9 @@ public:
 
     inline bool is_mine() const { return is_mine_; };
 
+    inline const std::vector<std::reference_wrapper<Pacman>>& active_pacmans() const { return active_pacmans_; }
+    inline std::vector<std::reference_wrapper<Pacman>>& active_pacmans() { return active_pacmans_; }
+
     inline const std::vector<Pacman>& pacmans() const { return pacmans_; }
     inline std::vector<Pacman>& pacmans() { return pacmans_; }
 
@@ -29,7 +32,10 @@ private:
     Game* game_ = nullptr;
     bool is_mine_;
     int score_;
+
+protected:
     std::vector<Pacman> pacmans_;
+    std::vector<std::reference_wrapper<Pacman>> active_pacmans_;
 };
 
 class Avatar : public Player
