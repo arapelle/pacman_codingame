@@ -9,6 +9,7 @@ Pacman::Pacman(Player& owner)
     : owner_(&owner),
       id_(-1),
       position_(-1,-1),
+      previous_position_(-1,-1),
       type_(Type::Rock),
       speed_turns_left_(0),
       ability_cooldown_(0),
@@ -37,7 +38,10 @@ bool Pacman::has_destination() const
 void Pacman::update_from_pacman_info(const Pacman_info& pacman_info)
 {
     id_ = pacman_info.pac_id;
+    previous_position_ = position_;
     position_ = Position(pacman_info.x, pacman_info.y);
+    if (is_mine() && position_ == previous_position_)
+        destination_ = bad_position;
     if (pacman_info.type_id == "ROCK")
         type_ = Type::Rock;
     else if (pacman_info.type_id == "PAPER")

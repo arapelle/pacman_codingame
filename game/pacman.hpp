@@ -18,6 +18,8 @@ public:
     };
 
 public:
+    inline static Position bad_position = Position(-1,-1);
+
     explicit Pacman(Player& owner);
 
     const Game& game() const;
@@ -51,6 +53,7 @@ private:
     Player* owner_ = nullptr;
     int id_; // pac number (unique within a team)
     Position position_; // position in the grid
+    Position previous_position_; // previous position in the grid
     Type type_; // unused in wood leagues
     int speed_turns_left_; // unused in wood leagues
     int ability_cooldown_; // unused in wood leagues
