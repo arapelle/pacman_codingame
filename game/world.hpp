@@ -23,5 +23,8 @@ public:
     void update_from_turn_info(const Turn_info& turn_info);
 
 private:
+    void remove_all_pellet_();
+
+private:
     Game* game_ = nullptr;
 };
