@@ -1,3 +1,3 @@
 #pragma once
 
-inline const char* version = "one action for everyone. v4";
+inline const char* version = "Update data with bronze league rules. v1";
