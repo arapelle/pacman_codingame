@@ -44,7 +44,8 @@ void World::update_from_turn_info(const Turn_info& turn_info)
     for (Pacman& pacman : opponent.pacmans())
     {
         // TODO get(pacman.previous_position()).set_pacman(nullptr);
-        get(pacman.position()).set_pacman(pacman);
+        if (contains(pacman.position()))
+            get(pacman.position()).set_pacman(pacman);
     }
 
     Avatar& avatar = game().avatar();
