@@ -28,11 +28,18 @@ public:
     inline void set_owner(Player& owner) { owner_ = &owner; }
     bool is_mine() const;
 
+    // id:
     inline int id() const { return id_; }
-    char char_id() const { return (is_mine() ? '0' : 'A') + id_; }
+    inline char char_id() const { return (is_mine() ? '0' : 'A') + id_; }
+    // pos:
     inline const Position& position() const { return position_; }
+    // type:
     inline Type type() const { return type_; }
     bool is_stronger(const Pacman& pacman) const;
+    // ability:
+    inline bool is_fast() const { return speed_turns_left_ > 0; }
+    inline bool is_ability_available() const { return ability_cooldown_ == 0; }
+    inline int ability_cooldown() const { return ability_cooldown_; }
 
     void update_from_pacman_info(const Pacman_info& pacman_info);
 
