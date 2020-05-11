@@ -55,10 +55,8 @@ void World::update_from_turn_info(const Turn_info& turn_info)
         remove_all_pellet_around_pacman_(pacman);
     }
 
-    print(debug());
     for (Pellet_info pellet_info : turn_info.pellet_infos)
         get(pellet_info.x, pellet_info.y).set_pellet(static_cast<Pellet>(pellet_info.value));
-    print(debug());
 }
 
 void World::remove_all_pellet_()
