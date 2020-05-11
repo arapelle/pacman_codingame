@@ -2,16 +2,31 @@
 
 #include "pacman.hpp"
 #include "grid/grid_types.hpp"
+#include <sstream>
 #include <ostream>
 #include <vector>
 #include <memory>
 
 class Action
 {
+    inline static std::size_t max_buffer_size = 7;
+
 public:
     Action() {}
     virtual ~Action();
     virtual std::ostream& write_to_stream(std::ostream& stream) const = 0;
+
+    template <typename Type>
+    Action& operator<<(const Type& arg)
+    {
+        msg_stream_ << arg;
+        return *this;
+    }
+
+    std::string message() const;
+
+private:
+    std::ostringstream msg_stream_;
 };
 
 class Pacman_action : public Action
@@ -66,12 +81,15 @@ class Action_sequence : public Action
 public:
     virtual ~Action_sequence();
 
-    void add_action(std::unique_ptr<Action> action_uptr);
+    Action& add_action(std::unique_ptr<Action> action_uptr);
 
     template <typename Action, typename... Args>
-    void add_action(Args&&... args)
+    Action& add_action(Args&&... args)
     {
-        actions_.push_back(std::make_unique<Action>(std::forward<Args>(args)...));
+        auto action_uptr = std::make_unique<Action>(std::forward<Args>(args)...);
+        Action& action_ref = *action_uptr;
+        actions_.push_back(std::move(action_uptr));
+        return action_ref;
     }
 
     inline const auto& actions() const { return actions_; }

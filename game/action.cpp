@@ -7,6 +7,13 @@ Action::~Action()
 {
 }
 
+std::string Action::message() const
+{
+    std::string msg = msg_stream_.str();
+    msg.resize(max_buffer_size, ' ');
+    return msg;
+}
+
 // Pacman_action:
 
 Pacman_action::Pacman_action(const Pacman& pacman)
@@ -27,7 +34,7 @@ Move::~Move() {}
 
 std::ostream& Move::write_to_stream(std::ostream& stream) const
 {
-    return stream << label << " " << pacman_id() << " " << destination_;
+    return stream << label << " " << pacman_id() << " " << destination_ << " " << std::string_view(message().c_str(), 7);
 }
 
 // Speed:
@@ -40,7 +47,7 @@ Speed::~Speed() {}
 
 std::ostream& Speed::write_to_stream(std::ostream& stream) const
 {
-    return stream << label << " " << pacman_id();
+    return stream << label << " " << pacman_id() << " " << message();
 }
 
 // Switch:
@@ -53,16 +60,17 @@ Switch::~Switch() {}
 
 std::ostream& Switch::write_to_stream(std::ostream& stream) const
 {
-    return stream << label << " " << pacman_id() << " " << to_string(new_type_);
+    return stream << label << " " << pacman_id() << " " << to_string(new_type_) << " " << message();
 }
 
 // Action_sequence:
 
 Action_sequence::~Action_sequence() {}
 
-void Action_sequence::add_action(std::unique_ptr<Action> action_uptr)
+Action& Action_sequence::add_action(std::unique_ptr<Action> action_uptr)
 {
     actions_.push_back(std::move(action_uptr));
+    return *actions_.back();
 }
 
 std::ostream& Action_sequence::write_to_stream(std::ostream& stream) const

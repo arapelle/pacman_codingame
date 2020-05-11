@@ -62,7 +62,7 @@ void Game::send_actions_()
 
     for (const Pacman& pacman : avatar_.active_pacmans())
         if (pacman.is_ability_available())
-            action_sequence.add_action<Speed>(pacman);
+            action_sequence.add_action<Speed>(pacman) << pacman.destination();
     if (action_sequence.actions().size() > 0)
     {
         output_ << action_sequence << std::endl;
@@ -87,7 +87,7 @@ void Game::send_actions_()
             ++pos_iter;
         }
         assert(pacman.has_destination());
-        action_sequence.add_action<Move>(pacman, pacman.destination());
+        action_sequence.add_action<Move>(pacman, pacman.destination()) << pacman.destination();
     }
 
     debug() << "go to small!" << std::endl;
@@ -106,7 +106,7 @@ void Game::send_actions_()
         info() << pacman.id() << ",";
         if (pacman.has_destination())
         {
-            action_sequence.add_action<Move>(*pacman_iter, pacman.destination());
+            action_sequence.add_action<Move>(*pacman_iter, pacman.destination()) << pacman.destination();
             continue;
         }
 
@@ -114,7 +114,7 @@ void Game::send_actions_()
         if (sqiter_iter != viter.end())
         {
             destination = sqiter_iter->position();
-            action_sequence.add_action<Move>(*pacman_iter, destination);
+            action_sequence.add_action<Move>(*pacman_iter, destination) << pacman.destination();
             ++sqiter_iter;
         }
         else
@@ -126,7 +126,7 @@ void Game::send_actions_()
                 break;
             }
             destination = iter.position();
-            action_sequence.add_action<Move>(*pacman_iter, destination);
+            action_sequence.add_action<Move>(*pacman_iter, destination) << pacman.destination();
         }
         pacman.set_destination(destination);
     }
