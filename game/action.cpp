@@ -17,7 +17,7 @@ Pacman_action::~Pacman_action() {}
 
 int Pacman_action::pacman_id() const { return pacman_->id(); }
 
-// Goto:
+// Move:
 
 Move::Move(const Pacman& pacman, const Position& destination)
     : Pacman_action(pacman), destination_(destination)
@@ -27,7 +27,33 @@ Move::~Move() {}
 
 std::ostream& Move::write_to_stream(std::ostream& stream) const
 {
-    return stream << "MOVE " << pacman_id() << " " << destination_;
+    return stream << label << " " << pacman_id() << " " << destination_;
+}
+
+// Speed:
+
+Speed::Speed(const Pacman& pacman)
+    : Pacman_action(pacman)
+{}
+
+Speed::~Speed() {}
+
+std::ostream& Speed::write_to_stream(std::ostream& stream) const
+{
+    return stream << label << " " << pacman_id();
+}
+
+// Switch:
+
+Switch::Switch(const Pacman& pacman, Pacman::Type new_type)
+    : Pacman_action(pacman), new_type_(new_type)
+{}
+
+Switch::~Switch() {}
+
+std::ostream& Switch::write_to_stream(std::ostream& stream) const
+{
+    return stream << label << " " << pacman_id() << " " << to_string(new_type_);
 }
 
 // Action_sequence:
