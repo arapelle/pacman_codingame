@@ -78,11 +78,24 @@ void Game::send_actions_()
     auto sqiter_iter = viter.begin();
     for (auto pacman_end_iter = avatar_.pacmans().end();
          pacman_iter != pacman_end_iter;
-         ++pacman_iter, ++sqiter_iter)
+         ++pacman_iter)
     {
         info() << pacman_iter->id() << ",";
         if (sqiter_iter != viter.end())
+        {
             action_sequence.add_action<Move>(*pacman_iter, sqiter_iter->position());
+            ++sqiter_iter;
+        }
+        else
+        {
+            auto iter = std::find_if(world_.begin(), world_.end(), &square_is_free);
+            if (iter == world_.end())
+            {
+                error() << "oO: Whut?! No more free square?!" << std::endl;
+                break;
+            }
+            action_sequence.add_action<Move>(*pacman_iter, iter.position());
+        }
     }
     info() << "\nend loop" << std::endl;
 
