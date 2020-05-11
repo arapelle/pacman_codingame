@@ -5,6 +5,7 @@
 #include <istream>
 
 class Game;
+class Pacman;
 class Turn_info;
 
 class World : public Grid<Square>
@@ -24,6 +25,11 @@ public:
 
 private:
     void remove_all_pellet_();
+    void remove_all_big_pellet_();
+    void remove_all_pellet_around_pacman_(const Pacman& pacman);
+
+public:
+    void print(std::ostream& stream);
 
 private:
     Game* game_ = nullptr;

@@ -88,7 +88,7 @@ void Game::send_actions_()
         }
         else
         {
-            auto iter = std::find_if(world_.begin(), world_.end(), &square_is_free);
+            auto iter = std::find_if(world_.begin(), world_.end(), &square_is_place);
             if (iter == world_.end())
             {
                 error() << "oO: Whut?! No more free square?!" << std::endl;

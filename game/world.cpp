@@ -1,6 +1,11 @@
 #include "world.hpp"
+#include "player.hpp"
 #include "turn_info.hpp"
+#include "game.hpp"
+#include "direction/neighbourhood.hpp"
+#include "direction/direction.hpp"
 #include "grid/grid_algo.hpp"
+#include "log/log.hpp"
 
 World::World(Game& game, unsigned width, unsigned height)
     : Base(width, height), game_(&game)
@@ -29,12 +34,72 @@ void World::read_from_stream(std::istream& stream)
 
 void World::update_from_turn_info(const Turn_info& turn_info)
 {
-    remove_all_pellet_();
+    remove_all_big_pellet_();
+    //TODO Improve:{
+    for (auto& square : *this)
+        square.set_pacman(nullptr);
+    //}
+
+    Opponent& opponent = game().opponent();
+    for (Pacman& pacman : opponent.pacmans())
+    {
+        // TODO get(pacman.previous_position()).set_pacman(nullptr);
+        get(pacman.position()).set_pacman(pacman);
+    }
+
+    Avatar& avatar = game().avatar();
+    for (Pacman& pacman : avatar.pacmans())
+    {
+        // TODO get(pacman.previous_position()).set_pacman(nullptr);
+        get(pacman.position()).set_pacman(pacman);
+        remove_all_pellet_around_pacman_(pacman);
+    }
+
+    print(debug());
     for (Pellet_info pellet_info : turn_info.pellet_infos)
         get(pellet_info.x, pellet_info.y).set_pellet(static_cast<Pellet>(pellet_info.value));
+    print(debug());
 }
 
 void World::remove_all_pellet_()
 {
-    for_each_if(*this, &square_is_free, [](Square& square){ square.set_pellet(No_pellet); });
+    for_each_if(*this, &square_is_place, [](Square& square){ square.set_pellet(No_pellet); });
+}
+
+void World::remove_all_big_pellet_()
+{
+    for_each_if(*this, &square_has_big_pellet, [](Square& square){ square.set_pellet(No_pellet); });
+}
+
+void World::remove_all_pellet_around_pacman_(const Pacman& pacman)
+{
+    get(pacman.position()).set_pellet(No_pellet);
+    for (Direction4 dir : Directions4::directions)
+    {
+        Position position = pacman.position();
+        for (;;)
+        {
+            position = neighbour(position, dir);
+            if (contains(position))
+            {
+                if (Square& square = get(position); square.is_place())
+                {
+                    square.set_pellet(No_pellet);
+                    continue;
+                }
+            }
+            break;
+        }
+    }
+}
+
+void World::print(std::ostream& stream)
+{
+    stream << std::endl;
+    for (unsigned j = 0; j < height(); ++j)
+    {
+        for (unsigned i = 0; i < width(); ++i)
+            get(i,j).print(stream);
+        stream << std::endl;
+    }
 }
