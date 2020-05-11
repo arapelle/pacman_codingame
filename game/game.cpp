@@ -55,6 +55,15 @@ void Game::send_actions_()
     // To debug: cerr << "Debug messages..." << endl;
     // output_ << "MOVE 0 15 10" << std::endl; // MOVE <pacId> <x> <y>
 
+    for (const Pacman& pacman : avatar_.pacmans())
+        if (pacman.is_ability_available())
+            action_sequence.add_action<Speed>(pacman);
+    if (action_sequence.actions().size() > 0)
+    {
+        output_ << action_sequence << std::endl;
+        return;
+    }
+
     info() << "go to big!" << std::endl;
 
     Position_set pos_set = find_all_positions_if(world_, &square_has_big_pellet);
@@ -71,10 +80,8 @@ void Game::send_actions_()
 
     info() << "go to small!" << std::endl;
 
-    info() << "find_all_if(world_, &square_has_pellet)" << std::endl;
     auto viter = find_all_if(world_, &square_has_pellet);
     std::shuffle(viter.begin(), viter.end(), rand_int_engine());
-    info() << "start loop" << std::endl;
     auto sqiter_iter = viter.begin();
     for (auto pacman_end_iter = avatar_.pacmans().end();
          pacman_iter != pacman_end_iter;
@@ -97,7 +104,6 @@ void Game::send_actions_()
             action_sequence.add_action<Move>(*pacman_iter, iter.position());
         }
     }
-    info() << "\nend loop" << std::endl;
 
     output_ << action_sequence << std::endl;
 }
