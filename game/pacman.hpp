@@ -40,6 +40,10 @@ public:
     inline bool is_fast() const { return speed_turns_left_ > 0; }
     inline bool is_ability_available() const { return ability_cooldown_ == 0; }
     inline int ability_cooldown() const { return ability_cooldown_; }
+    // strategy:
+    bool has_destination() const;
+    inline const Position& destination() const { return destination_; }
+    inline void set_destination(const Position& position) { destination_ = position; }
 
     void update_from_pacman_info(const Pacman_info& pacman_info);
 
@@ -50,6 +54,8 @@ private:
     Type type_; // unused in wood leagues
     int speed_turns_left_; // unused in wood leagues
     int ability_cooldown_; // unused in wood leagues
+
+    Position destination_;
 };
 
 std::string_view to_string(const Pacman::Type& type);
