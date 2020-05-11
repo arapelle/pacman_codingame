@@ -17,6 +17,8 @@ public:
     inline Game& game() { assert(game_); return *game_; }
     inline void set_game(Game& game) { game_ = &game; }
 
+    inline bool is_mine() const { return is_mine_; };
+
     inline const std::vector<Pacman>& pacmans() const { return pacmans_; }
     inline std::vector<Pacman>& pacmans() { return pacmans_; }
 
