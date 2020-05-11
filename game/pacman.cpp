@@ -16,6 +16,8 @@ const Game& Pacman::game() const { return owner().game(); }
 
 Game& Pacman::game() { return owner().game(); }
 
+bool Pacman::is_mine() const { return owner().is_mine(); }
+
 bool Pacman::is_stronger(const Pacman& pacman) const
 {
     if (type_ != Type::Rock)

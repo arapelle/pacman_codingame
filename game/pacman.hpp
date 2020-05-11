@@ -26,8 +26,10 @@ public:
     inline const Player& owner() const { assert(owner_); return *owner_; }
     inline Player& owner() { assert(owner_); return *owner_; }
     inline void set_owner(Player& owner) { owner_ = &owner; }
+    bool is_mine() const;
 
     inline int id() const { return id_; }
+    char char_id() const { return (is_mine() ? '0' : 'A') + id_; }
     inline const Position& position() const { return position_; }
     inline Type type() const { return type_; }
     bool is_stronger(const Pacman& pacman) const;
