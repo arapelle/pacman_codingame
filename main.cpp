@@ -3,10 +3,6 @@
 #include <iostream>
 #include <cstdlib>
 
-//TODO command.hpp: class Command; class Command_vector : vector<unique_ptr<Command>>; string_to_commands(string) -> Command_vector
-
-//TODO strategy multi
-
 int main()
 {
     Game game(std::cin, std::cout);

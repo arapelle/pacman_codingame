@@ -1,0 +1,6 @@
+Todo:
+=====
+.Square::pacman_
+.Player::active_pacmans_,::pacmans_
+.World::big_pellets_
+(.Pacman::Strategy)

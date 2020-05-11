@@ -57,4 +57,5 @@ HEADERS += \
     version.hpp
 
 DISTFILES += \
-    catlist.txt
+    catlist.txt \
+    todo.txt
