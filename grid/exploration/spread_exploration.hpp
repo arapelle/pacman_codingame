@@ -165,10 +165,3 @@ class Distance_test : public AccessibilityTestBase
 public:
     //TODO
 };
-
-//---------------------------------------------------
-
-namespace test
-{
-void compilation_test();
-}

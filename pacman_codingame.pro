@@ -19,6 +19,7 @@ SOURCES += \
         grid/grid_algo.cpp \
         grid/grid_base.cpp \
         main.cpp \
+        test/spread_exploration/old_compilation_test.cpp \
         vec2/vec2i.cpp \
         vec2/vec2u.cpp
 
@@ -54,6 +55,7 @@ HEADERS += \
     grid/iterator_range.hpp \
     grid/neighbourhood.hpp \
     log/log.hpp \
+    test/spread_exploration/old_compilation_test.hpp \
     vec2/vec2i.hpp \
     vec2/vec2u.hpp \
     version.hpp
