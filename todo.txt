@@ -1,10 +1,21 @@
 Todo:
 =====
-(.Pacman::Type -> Pacman_type)
-(.Pacman::Strategy)
+.Move Game strategies to Avatar
+.Use exploration algos
+
+Ideas:
+======
+.Pacman's Strategy:
+  .role_ : enum Pacman_role
+  .action_todo_ : Action_sptr
+  .action_sent_ : Action_sptr
+  .strategy_ : Strategy_uptr
+    .goal_ : Position
+    .make_action_todo()
 
 Done:
 =====
+.Pacman::Type -> Pacman_type
 .World::big_pellets_,::small_pellets_
 .Player::active_pacmans_,::pacmans_
 .Pacman::previous_position_
