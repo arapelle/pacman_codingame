@@ -42,6 +42,9 @@ game/pacman.hpp
 game/player.hpp
 game/game.hpp
 
+# test:
+test/spread_exploration/spread_exploration_tests.hpp
+
 # CPP:
 #-----
 core/algo.cpp
@@ -62,6 +65,9 @@ game/pacman.cpp
 game/player.cpp
 game/action.cpp
 game/pacman_type.cpp
+
+# test:
+test/spread_exploration/spread_exploration_tests.cpp
 
 # main:
 main.cpp

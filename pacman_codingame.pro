@@ -20,6 +20,7 @@ SOURCES += \
         grid/grid_base.cpp \
         main.cpp \
         test/spread_exploration/old_compilation_test.cpp \
+        test/spread_exploration/spread_exploration_tests.cpp \
         vec2/vec2i.cpp \
         vec2/vec2u.cpp
 
@@ -56,6 +57,7 @@ HEADERS += \
     grid/neighbourhood.hpp \
     log/log.hpp \
     test/spread_exploration/old_compilation_test.hpp \
+    test/spread_exploration/spread_exploration_tests.hpp \
     vec2/vec2i.hpp \
     vec2/vec2u.hpp \
     version.hpp
