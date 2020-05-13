@@ -96,7 +96,7 @@ void spread_exploration(const ExplorationPolicy&, MarkGrid& marks, GridWorld& wo
                     if (Mark& nmark = marks.get(npos); !marks.is_treated(nmark))
                     {
                         Mark mark = nmark;
-                        marks.set_visited(nmark, cpos, cmark, std::forward<decltype(action)>(action));
+                        marks.set_visited(mark, cpos, cmark, std::forward<decltype(action)>(action));
                         if (accessibility_test(world, npos, mark))
                             treat_square(npos, nmark, std::move(mark));
                     }
