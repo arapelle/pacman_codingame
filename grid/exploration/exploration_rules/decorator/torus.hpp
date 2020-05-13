@@ -34,9 +34,9 @@ public:
         if (!grid_->contains(position))
         {
             unsigned gwidth = grid_->width();
-            position.x = (position.x % gwidth + gwidth) % gwidth;
+            position.x = ((position.x % gwidth) + gwidth) % gwidth;
             unsigned gheight = grid_->height();
-            position.y %= (position.y % gheight + gheight) % gheight;
+            position.y = ((position.y % gheight) + gheight) % gheight;
         }
         return position;
     }
