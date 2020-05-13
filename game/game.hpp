@@ -1,6 +1,7 @@
 #pragma once
 
-#include "player.hpp"
+#include "avatar.hpp"
+#include "opponent.hpp"
 #include "world.hpp"
 #include <iostream>
 
@@ -29,9 +30,6 @@ public:
 private:
     void update_from_turn_info_(const Turn_info& turn_info);
     void send_actions_();
-    void assign_actions_();
-    std::size_t assign_speed_action_();
-    std::size_t assign_move_action_(std::vector<World::Iterator> square_iters);
 
 private:
     std::istream& input_;

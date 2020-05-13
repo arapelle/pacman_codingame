@@ -37,23 +37,3 @@ protected:
     std::vector<Pacman> pacmans_;
     std::vector<std::reference_wrapper<Pacman>> active_pacmans_;
 };
-
-class Avatar : public Player
-{
-public:
-    explicit Avatar(Game& game);
-
-    void update_from_turn_info(const Turn_info& turn_info);
-
-private:
-};
-
-class Opponent : public Player
-{
-public:
-    explicit Opponent(Game& game);
-
-    void update_from_turn_info(const Turn_info& turn_info);
-
-private:
-};

@@ -8,7 +8,9 @@ SOURCES += \
         core/random.cpp \
         direction/direction.cpp \
         game/action.cpp \
+        game/avatar.cpp \
         game/game.cpp \
+        game/opponent.cpp \
         game/pacman.cpp \
         game/pacman_type.cpp \
         game/player.cpp \
@@ -31,7 +33,9 @@ HEADERS += \
     direction/direction.hpp \
     direction/neighbourhood.hpp \
     game/action.hpp \
+    game/avatar.hpp \
     game/game.hpp \
+    game/opponent.hpp \
     game/pacman.hpp \
     game/pacman_type.hpp \
     game/player.hpp \

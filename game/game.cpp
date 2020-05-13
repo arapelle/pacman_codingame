@@ -57,84 +57,11 @@ void Game::send_actions_()
     // Write an action using cout. DON'T FORGET THE "<< endl"
     // To debug: cerr << "Debug messages..." << endl;
     // output_ << "MOVE 0 15 10" << std::endl; // MOVE <pacId> <x> <y>
-    assign_actions_();
+    avatar_.manage_pacmans();
 
     Action_sequence action_sequence;
     for (const Pacman& pacman : avatar_.active_pacmans())
         if (Action_sptr action_sptr = pacman.action_todo(); action_sptr)
             action_sequence.add_action(std::move(action_sptr));
     output_ << action_sequence << std::endl;
-}
-
-void Game::assign_actions_()
-{
-    std::size_t count = 0;
-    std::size_t pacman_count = avatar_.active_pacmans().size();
-
-    count += assign_speed_action_();
-    debug() << "Assign speed: " << count << std::endl;
-    if (count == pacman_count)
-        return;
-
-    count += assign_move_action_(world_.big_pellets_iters());
-    debug() << "Assign move to big pellet: " << count << std::endl;
-    if (count == pacman_count)
-        return;
-
-    count += assign_move_action_(world_.small_pellets_iters());
-    debug() << "Assign move to small pellet: " << count << std::endl;
-    if (count == pacman_count)
-        return;
-
-    count += assign_move_action_(find_all_if(world_, &square_is_place));
-    debug() << "Assign move to square: " << count << std::endl;
-}
-
-std::size_t Game::assign_speed_action_()
-{
-    std::size_t count = 0;
-
-    for (Pacman& pacman : avatar_.active_pacmans())
-    {
-        if (pacman.has_action_todo())
-            continue;
-
-        if (pacman.is_ability_available())
-        {
-            pacman.set_action_todo<Speed>(pacman) << pacman.destination();
-            ++count;
-        }
-    }
-
-    return count;
-}
-
-std::size_t Game::assign_move_action_(std::vector<World::Iterator> square_iters)
-{
-    trace();
-    std::size_t count = 0;
-
-    std::shuffle(square_iters.begin(), square_iters.end(), rand_int_engine());
-
-    auto square_iter = square_iters.begin();
-    for (Pacman& pacman : avatar_.active_pacmans())
-    {
-        debug() << "pacman: " << pacman.char_id() << std::endl;
-        if (pacman.has_action_todo())
-            continue;
-
-        if (square_iter == square_iters.end())
-            break;
-
-        if (!pacman.has_destination())
-        {
-            pacman.set_destination(square_iter->position());
-            ++square_iter;
-        }
-        assert(pacman.has_destination());
-        pacman.set_action_todo<Move>(pacman, pacman.destination()) << pacman.destination();
-        ++count;
-    }
-
-    return count;
 }
