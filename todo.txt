@@ -2,6 +2,7 @@ Todo:
 =====
 .Move Game strategies to Avatar
 .Use exploration algos
+.Spread exploration: set_visited(const Position& root_position)
 
 Ideas:
 ======
