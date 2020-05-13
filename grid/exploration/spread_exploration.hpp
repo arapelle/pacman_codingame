@@ -2,6 +2,7 @@
 
 #include "mark.hpp"
 #include "mark_grid.hpp"
+#include "stop_condition/no_stop_condition.hpp"
 #include "grid/grid_algo.hpp"
 #include "direction/neighbourhood.hpp"
 #include "core/default_arg.hpp"
@@ -13,12 +14,6 @@ struct Dummy_square_visitor
 {
     template <typename GridWorld, typename Mark>
     inline constexpr void operator()(GridWorld&, const Position&, Mark&) const {}
-};
-
-struct No_stop_condition
-{
-    template <typename MarkGrid>
-    inline constexpr bool operator()(const MarkGrid&) const { return false; }
 };
 
 struct Forward_exploration {};

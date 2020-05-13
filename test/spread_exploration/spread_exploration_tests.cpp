@@ -98,4 +98,20 @@ void torus_forward_test()
     marks.print(std::cout, Game_mark::Print_context::Distance);
 }
 
+void positions_treated_test()
+{
+    trace();
+    Grid_world world(8, 6, Square(true));
+    Square_is_space accessibility_test;
+    Torus_directions4_exploration_rules<Grid_world> exploration_rules(world);
+    Position start(2,1);
+    Position dest(5,3);
+    Game_mark_grid marks;
+    Positions_treated destination_treated(dest);
+    spread_from_start(marks, world, start, exploration_rules, accessibility_test, default_square_visitor, destination_treated);
+    marks.print(std::cout, Game_mark::Print_context::Link_position);
+    marks.print(std::cout, Game_mark::Print_context::Direction);
+    marks.print(std::cout, Game_mark::Print_context::Distance);
+}
+
 }

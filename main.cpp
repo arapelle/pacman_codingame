@@ -12,6 +12,7 @@ int main(int argc, char** argv)
         test::forward_test();
         test::torus_backward_test();
         test::torus_forward_test();
+        test::positions_treated_test();
         std::cerr << "EXIT SUCCESS" << std::endl;
     }
     else

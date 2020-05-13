@@ -3,6 +3,7 @@
 #include "grid/grid.hpp"
 #include "grid/exploration/mark.hpp"
 #include "grid/exploration/mark_grid.hpp"
+#include "grid/exploration/stop_condition/positions_treated.hpp"
 #include "grid/exploration/exploration_rules/directions4_exploration_rules.hpp"
 #include "grid/exploration/exploration_rules/torus_directions4_exploration_rules.hpp"
 
@@ -71,4 +72,5 @@ void backward_test();
 void forward_test();
 void torus_backward_test();
 void torus_forward_test();
+void positions_treated_test();
 }

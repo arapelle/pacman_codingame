@@ -47,6 +47,8 @@ HEADERS += \
     grid/exploration/reachable_positions.hpp \
     grid/exploration/reachable_squares.hpp \
     grid/exploration/spread_exploration.hpp \
+    grid/exploration/stop_condition/no_stop_condition.hpp \
+    grid/exploration/stop_condition/positions_treated.hpp \
     grid/grid.hpp \
     grid/grid_algo.hpp \
     grid/grid_base.hpp \

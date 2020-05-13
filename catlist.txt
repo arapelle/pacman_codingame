@@ -24,6 +24,8 @@ grid/grid_algo.hpp
 
 grid/exploration/mark.hpp
 grid/exploration/mark_grid.hpp
+grid/exploration/stop_condition/no_stop_condition.hpp
+grid/exploration/stop_condition/positions_treated.hpp
 grid/exploration/spread_exploration.hpp
 grid/exploration/reachable_positions.hpp
 grid/exploration/reachable_squares.hpp
