@@ -93,6 +93,12 @@ public:
         return chars.at(dir.index() + 2);
     }
 
+    inline static char to_arrow_char(Direction4 dir)
+    {
+        static std::string_view chars("?%^>v<");
+        return chars.at(dir.index() + 2);
+    }
+
     inline static std::string_view to_string_view(Direction4 dir)
     {
         static std::array<std::string_view, count + 2> sv_array{ "Undefined", "Bad", "North", "East", "South", "West" };
