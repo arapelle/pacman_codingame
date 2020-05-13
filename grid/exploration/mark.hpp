@@ -37,7 +37,7 @@ public:
 
     explicit Distance_mark(const Position& position = Position())
         : MarkBase(position),
-          distance_(std::numeric_limits<unsigned>::max())
+          distance_(0)
     {}
 
     template <typename Action>
