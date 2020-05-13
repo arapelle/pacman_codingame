@@ -35,7 +35,7 @@ class Distance_mark : public MarkBase
 public:
     inline unsigned distance() const { return this->distance_; }
 
-    explicit Distance_mark(const Position& position = Position())
+    explicit Distance_mark(const Position& position = Position(-1,-1))
         : MarkBase(position),
           distance_(0)
     {}
@@ -55,7 +55,7 @@ template <typename Action, typename MarkBase = Basic_mark>
 class Action_mark : public MarkBase
 {
 public:
-    explicit Action_mark(const Position& position = Position())
+    explicit Action_mark(const Position& position = Position(-1,-1))
         : MarkBase(position),
           action_(Directions4::undefined_direction)
     {}
@@ -80,10 +80,31 @@ private:
 };
 
 template <typename MarkBase = Basic_mark>
+class Root_mark : public MarkBase
+{
+public:
+    explicit Root_mark(const Position& position = Position(-1,-1))
+        : MarkBase(position), root_position_(position)
+    {}
+
+    inline const Position& root_position() const { return root_position_; }
+
+    template <class Action>
+    void set_visited(Position neighbour_position, Action&& action, const Root_mark& nmark)
+    {
+        this->MarkBase::set_visited(neighbour_position, std::forward<Action>(action), nmark);
+        root_position_ = nmark.root_position();
+    }
+
+private:
+    Position root_position_;
+};
+
+template <typename MarkBase = Basic_mark>
 class Link_mark : public MarkBase
 {
 public:
-    explicit Link_mark(const Position& position = Position())
+    explicit Link_mark(const Position& position = Position(-1,-1))
         : MarkBase(position), link_position_(position)
     {}
 
@@ -109,7 +130,7 @@ class Forward_step_mark : public Step_mark<Direction, MarkBase>
     using Base = Step_mark<Direction, MarkBase>;
 
 public:
-    explicit Forward_step_mark(const Position& position = Position())
+    explicit Forward_step_mark(const Position& position = Position(-1,-1))
         : Base(position)
     {}
 
@@ -124,7 +145,7 @@ class Backward_step_mark : public Step_mark<Direction, MarkBase>
     using Base = Step_mark<Direction, MarkBase>;
 
 public:
-    explicit Backward_step_mark(const Position& position = Position())
+    explicit Backward_step_mark(const Position& position = Position(-1,-1))
         : Base(position)
     {}
 
