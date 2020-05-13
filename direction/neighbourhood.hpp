@@ -10,8 +10,8 @@ Vec2 neighbour(Vec2 vec, Direction4 dir)
     {
     case Directions4::north: --vec.y; break;
     case Directions4::south: ++vec.y; break;
-    case Directions4::east: --vec.x; break;
-    case Directions4::west: ++vec.x; break;
+    case Directions4::east: ++vec.x; break;
+    case Directions4::west: --vec.x; break;
     case Directions4::bad_direction:
     case Directions4::undefined_direction:
     default:
