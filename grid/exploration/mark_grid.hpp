@@ -15,7 +15,7 @@ public:
 
     void resize(const Dimension& dimension) { this->Base::resize(dimension, Mark()); }
 
-    Exploration_square_status status(const Mark& mark) { return mark.status(); }
+    Exploration_square_status status(const Mark& mark) const { return mark.status(); }
 
     inline Mark make_visited_mark(const Position& position) const { return Mark(position); }
 
