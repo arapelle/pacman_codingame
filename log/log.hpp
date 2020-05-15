@@ -1,5 +1,6 @@
 #pragma once
 
+#include <chrono>
 #include <iostream>
 
 inline std::ostream& info() { return std::cerr; }
@@ -22,6 +23,23 @@ struct Function_trace
     const char* file;
     int line;
     const char* func;
+};
+
+struct Duration_trace
+{
+    Duration_trace()
+        : start_time_(std::chrono::steady_clock::now())
+    {}
+
+    ~Duration_trace()
+    {
+        std::chrono::steady_clock::time_point end_time = std::chrono::steady_clock::now();
+        std::chrono::duration<double, std::milli> turn_duration = end_time - start_time_;
+        debug() << "Duration: " << turn_duration.count() << "ms" << std::endl;
+    }
+
+private:
+    std::chrono::steady_clock::time_point start_time_;
 };
 
 #define TRACE 1
