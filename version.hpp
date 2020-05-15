@@ -1,3 +1,3 @@
 #pragma once
 
-inline const char* version = "v37.dev: Move class Avatar.";
+inline const char* version = "v41.dev: Use spread exploration.";

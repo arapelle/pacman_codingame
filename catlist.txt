@@ -42,6 +42,9 @@ game/world.hpp
 game/turn_info.hpp
 game/pacman.hpp
 game/player.hpp
+game/exploration/mark.hpp
+game/exploration/mark_grid.hpp
+game/exploration/accessibility_test.hpp
 game/avatar.hpp
 game/opponent.hpp
 game/game.hpp
@@ -67,6 +70,9 @@ game/turn_info.cpp
 game/game.cpp
 game/pacman.cpp
 game/player.cpp
+game/exploration/mark.cpp
+game/exploration/mark_grid.cpp
+game/exploration/accessibility_test.cpp
 game/avatar.cpp
 game/opponent.cpp
 game/action.cpp

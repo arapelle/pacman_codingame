@@ -1,6 +1,8 @@
 Todo:
 =====
-.Move Game strategies to Avatar
+.Pacman::priority (fewest reachable squares implies biggest priority)
+.Manage pacmans in increasing order of priority
+.Send actions in increasing order of priority
 .Use exploration algos
 .Spread exploration: set_visited(const Position& root_position)
 
@@ -8,7 +10,7 @@ Ideas:
 ======
 .Pacman's Strategy:
   .role_ : enum Pacman_role
-  .action_todo_ : Action_sptr
+  ~action_todo_ : Action_sptr
   .action_sent_ : Action_sptr
   .strategy_ : Strategy_uptr
     .goal_ : Position
@@ -16,6 +18,7 @@ Ideas:
 
 Done:
 =====
+.Move Game strategies to Avatar
 .Pacman::Type -> Pacman_type
 .World::big_pellets_,::small_pellets_
 .Player::active_pacmans_,::pacmans_

@@ -1,7 +1,13 @@
 #include "avatar.hpp"
+#include "exploration/mark.hpp"
+#include "exploration/mark_grid.hpp"
+#include "exploration/accessibility_test.hpp"
 #include "action.hpp"
 #include "game.hpp"
 #include "turn_info.hpp"
+#include "grid/exploration/spread_exploration.hpp"
+#include "grid/exploration/stop_condition/positions_treated.hpp"
+#include "grid/exploration/exploration_rules/torus_directions4_exploration_rules.hpp"
 #include "grid/grid_algo.hpp"
 #include "core/random.hpp"
 #include "log/log.hpp"
@@ -29,6 +35,8 @@ void Avatar::update_from_turn_info(const Turn_info& turn_info)
 
     Player::update_from_turn_info(turn_info);
 }
+
+// manage pacmans #1:
 
 void Avatar::manage_pacmans()
 {
@@ -101,4 +109,52 @@ std::size_t Avatar::assign_move_action_(std::vector<World::Iterator> square_iter
     }
 
     return count;
+}
+
+// manage pacmans #2:
+
+void Avatar::manage_pacmans_2()
+{
+    trace();
+    Duration_trace();
+
+    World& world = game().world();
+    Square_is_place accessibility_test;
+    Torus_directions4_exploration_rules<World> exploration_rules(world);
+    Game_mark_grid marks;
+    std::vector<Position> start_positions;
+    for (const Pacman& pacman : active_pacmans())
+        start_positions.push_back(pacman.position());
+    std::vector<Position> destination_positions;
+    for (const auto& iter : world.big_pellets_iters())
+        destination_positions.push_back(iter.position());
+    Positions_treated destinations_treated(destination_positions);
+    destinations_treated.set_number_of_wanted_positions(start_positions.size());
+
+    spread_from_starts(marks, world, start_positions.begin(), start_positions.end(),
+                       exploration_rules, accessibility_test, default_square_visitor, std::ref(destinations_treated));
+
+    for (const Position& position : destinations_treated.treated_positions())
+        debug() << "Pacman(" << marks.get(position).root_position() << ") go to (" << position << ")" << std::endl;
+
+//    print_mark_grid_(marks);
+}
+
+void Avatar::print_mark_grid_(const Game_mark_grid& mark_grid)
+{
+    const World& world = game().world();
+    for (unsigned j = 0, endj = mark_grid.height(); j != endj; ++j)
+    {
+        for (unsigned i = 0, endi = mark_grid.width(); i != endi; ++i)
+        {
+            const Square& square = world.get(i,j);
+            if (const Pacman* pacman = square.pacman(); pacman)
+                info() << "[=_" << pacman->char_id() << "_=]";
+            else if (square.is_wall())
+                info() << "[#####]";
+            else
+                mark_grid.get(i,j).print(info(), Game_mark::Print_context::Link_position);
+        }
+        info() << std::endl;
+    }
 }

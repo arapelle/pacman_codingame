@@ -9,6 +9,9 @@ SOURCES += \
         direction/direction.cpp \
         game/action.cpp \
         game/avatar.cpp \
+        game/exploration/accessibility_test.cpp \
+        game/exploration/mark.cpp \
+        game/exploration/mark_grid.cpp \
         game/game.cpp \
         game/opponent.cpp \
         game/pacman.cpp \
@@ -34,6 +37,9 @@ HEADERS += \
     direction/neighbourhood.hpp \
     game/action.hpp \
     game/avatar.hpp \
+    game/exploration/accessibility_test.hpp \
+    game/exploration/mark.hpp \
+    game/exploration/mark_grid.hpp \
     game/game.hpp \
     game/opponent.hpp \
     game/pacman.hpp \
