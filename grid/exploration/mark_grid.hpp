@@ -3,7 +3,7 @@
 #include "mark.hpp"
 #include "grid/grid.hpp"
 
-template <typename MarkType>
+template <typename MarkType = Basic_mark>
 class Mark_grid : public Grid<MarkType>
 {
     using Base = Grid<MarkType>;
