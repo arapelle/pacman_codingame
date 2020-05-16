@@ -57,7 +57,7 @@ class Action_mark : public MarkBase
 public:
     explicit Action_mark(const Position& position = Position(-1,-1))
         : MarkBase(position),
-          action_(Directions4::undefined_direction)
+          action_() // use optional?
     {}
 
     inline const Action& action() const { return action_; }
