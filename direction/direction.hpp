@@ -43,6 +43,8 @@ public:
     inline constexpr IT index() const { return value_; }
     inline constexpr operator IT() const { return value_; }
 
+    inline constexpr explicit Direction4() : Direction4(priv::Undefined_direction{}) {}
+
 private:
     inline constexpr explicit Direction4(IT value) : value_(value) {}
     inline constexpr explicit Direction4(priv::Bad_direction) : value_(bad_value_) {}
