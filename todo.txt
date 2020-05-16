@@ -1,5 +1,7 @@
 Todo:
 =====
+.World: square_neighbours_if
+.World: any_square_neighbour_if
 .Pacman::priority (fewest reachable squares implies biggest priority)
 .Manage pacmans in increasing order of priority
 .Send actions in increasing order of priority
