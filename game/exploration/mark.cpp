@@ -20,9 +20,6 @@ void Game_mark::print(std::ostream& stream, Print_context context) const
     case Print_context::Link_position:
         stream << "[" << std::setw(2) << link_position().x << " " << std::setw(2) << link_position().y << "]";
         break;
-    case Print_context::Direction:
-        stream << Directions4::to_arrow_char(action());
-        break;
     case Print_context::Distance:
         stream << "[" << std::setw(2) << distance() << "]";
         break;
