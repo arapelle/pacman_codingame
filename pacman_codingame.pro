@@ -12,6 +12,7 @@ SOURCES += \
         game/exploration/accessibility_test.cpp \
         game/exploration/mark.cpp \
         game/exploration/mark_grid.cpp \
+        game/exploration/pacman_exploration_rules.cpp \
         game/game.cpp \
         game/opponent.cpp \
         game/pacman.cpp \
@@ -40,6 +41,7 @@ HEADERS += \
     game/exploration/accessibility_test.hpp \
     game/exploration/mark.hpp \
     game/exploration/mark_grid.hpp \
+    game/exploration/pacman_exploration_rules.hpp \
     game/game.hpp \
     game/opponent.hpp \
     game/pacman.hpp \
