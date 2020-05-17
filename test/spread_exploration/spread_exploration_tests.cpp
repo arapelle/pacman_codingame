@@ -108,7 +108,8 @@ void positions_treated_test()
     Position dest(5,3);
     Game_mark_grid marks;
     Positions_treated destination_treated(dest);
-    spread_from_start(marks, world, start, exploration_rules, accessibility_test, default_square_visitor, destination_treated);
+    spread_from_start(marks, world, start, exploration_rules, accessibility_test,
+                      std::ref(destination_treated), std::ref(destination_treated));
     marks.print(std::cout, Game_mark::Print_context::Link_position);
     marks.print(std::cout, Game_mark::Print_context::Direction);
     marks.print(std::cout, Game_mark::Print_context::Distance);
