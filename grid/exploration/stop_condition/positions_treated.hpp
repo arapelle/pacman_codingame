@@ -27,23 +27,20 @@ public:
         , number_of_wanted_positions_(std::numeric_limits<std::size_t>::max())
     {}
 
+    template <typename GridWorld, typename Mark>
+    void operator()(GridWorld&, const Position& position, Mark&)
+    {
+        auto iter = std::find(positions_to_treat_.begin(), positions_to_treat_.end(), position);
+        if (iter != positions_to_treat_.end())
+        {
+            positions_to_treat_.erase(iter);
+            treated_positions_.push_back(position);
+        }
+    }
+
     template <typename MarkGrid>
     inline bool operator()(const MarkGrid& mark_grid)
     {
-        for (auto iter = positions_to_treat_.begin(); iter != positions_to_treat_.end(); )
-        {
-            Position position = *iter;
-            if (mark_grid.is_treated(mark_grid.get(position)))
-            {
-                positions_to_treat_.erase(iter);
-                treated_positions_.push_back(position);
-            }
-            else
-            {
-                ++iter;
-            }
-        }
-
         return positions_to_treat_.empty()
                 || treated_positions_.size() == number_of_wanted_positions_
                 || static_cast<const StopConditionBase&>(*this)(mark_grid);
