@@ -57,7 +57,7 @@ void Game::send_actions_()
     // Write an action using cout. DON'T FORGET THE "<< endl"
     // To debug: cerr << "Debug messages..." << endl;
     // output_ << "MOVE 0 15 10" << std::endl; // MOVE <pacId> <x> <y>
-    avatar_.manage_pacmans();
+//    avatar_.manage_pacmans();
     avatar_.manage_pacmans_2();
 
     Action_sequence action_sequence;

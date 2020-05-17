@@ -4,6 +4,7 @@
 #include "world.hpp"
 
 class Game_mark_grid;
+class Pacman_exploration;
 
 class Avatar : public Player
 {
@@ -15,6 +16,8 @@ public:
     void manage_pacmans_2();
 
 private:
+    void pacman_exploration_(Pacman& pacman, Pacman_exploration &mark_grid, World &world,
+                             const std::vector<Position>& destination_positions, const std::vector<Position> &forbidden_positions);
     void print_mark_grid_(const Game_mark_grid& mark_grid);
 
 private:

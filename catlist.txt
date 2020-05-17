@@ -26,10 +26,11 @@ grid/exploration/mark.hpp
 grid/exploration/mark_grid.hpp
 grid/exploration/stop_condition/no_stop_condition.hpp
 grid/exploration/stop_condition/positions_treated.hpp
+grid/exploration/stop_condition/first_square_found.hpp
 grid/exploration/spread_exploration.hpp
-grid/exploration/reachable_positions.hpp
-grid/exploration/reachable_squares.hpp
-grid/exploration/direction_to.hpp
+##grid/exploration/reachable_positions.hpp
+##grid/exploration/reachable_squares.hpp
+##grid/exploration/direction_to.hpp
 grid/exploration/exploration_rules/decorator/torus.hpp
 grid/exploration/exploration_rules/directions4_exploration_rules.hpp
 grid/exploration/exploration_rules/torus_directions4_exploration_rules.hpp
@@ -44,13 +45,16 @@ game/pacman.hpp
 game/player.hpp
 game/exploration/mark.hpp
 game/exploration/mark_grid.hpp
+game/exploration/associative_functor.hpp
 game/exploration/accessibility_test.hpp
+game/exploration/pacman_exploration.hpp
+game/exploration/pacman_exploration_rules.hpp
 game/avatar.hpp
 game/opponent.hpp
 game/game.hpp
 
 # test:
-test/spread_exploration/spread_exploration_tests.hpp
+##test/spread_exploration/spread_exploration_tests.hpp
 
 # CPP:
 #-----
@@ -77,9 +81,10 @@ game/avatar.cpp
 game/opponent.cpp
 game/action.cpp
 game/pacman_type.cpp
+game/exploration/pacman_exploration_rules.cpp
 
 # test:
-test/spread_exploration/spread_exploration_tests.cpp
+##test/spread_exploration/spread_exploration_tests.cpp
 
 # main:
 main.cpp

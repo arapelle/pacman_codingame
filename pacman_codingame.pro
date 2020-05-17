@@ -39,8 +39,10 @@ HEADERS += \
     game/action.hpp \
     game/avatar.hpp \
     game/exploration/accessibility_test.hpp \
+    game/exploration/associative_functor.hpp \
     game/exploration/mark.hpp \
     game/exploration/mark_grid.hpp \
+    game/exploration/pacman_exploration.hpp \
     game/exploration/pacman_exploration_rules.hpp \
     game/game.hpp \
     game/opponent.hpp \
@@ -59,6 +61,7 @@ HEADERS += \
     grid/exploration/reachable_positions.hpp \
     grid/exploration/reachable_squares.hpp \
     grid/exploration/spread_exploration.hpp \
+    grid/exploration/stop_condition/first_square_found.hpp \
     grid/exploration/stop_condition/no_stop_condition.hpp \
     grid/exploration/stop_condition/positions_treated.hpp \
     grid/grid.hpp \
