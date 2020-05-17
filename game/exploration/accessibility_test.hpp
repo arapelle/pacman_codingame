@@ -34,18 +34,30 @@ struct Square_is_accessible_for_pacman : public Square_is_place
         const Square& square = world.get(position);
         if (!this->is_place(square))
             return false;
+        if (std::find(forbidden_pos_.begin(), forbidden_pos_.end(), position) != forbidden_pos_.end())
+            return false;
         const Pacman* other_pacman = square.pacman();
         if (other_pacman == nullptr)
-            return true;
+        {
+            return !world.any_neighbour_square_if(position, [this](const Square& square)
+            {
+                const Pacman* pacman = square.pacman();
+                return pacman && pacman->is_mine() != pacman_->is_mine() && pacman->is_stronger(*pacman_);
+            });
+        }
         if (other_pacman == pacman_) // Oo whut?
             return true;
-        if (other_pacman->is_mine() == pacman_->is_mine())
-            return true;
-        return pacman_->is_stronger(*other_pacman);
+        if (other_pacman->is_mine() != pacman_->is_mine())
+            return pacman_->is_stronger(*other_pacman);
+        return false;
     }
+
+    inline const std::vector<Position>& forbidden_positions() const { return forbidden_pos_; }
+    inline std::vector<Position>& forbidden_positions() { return forbidden_pos_; }
 
 private:
     const Pacman* pacman_;
+    std::vector<Position> forbidden_pos_;
 };
 
 template <class AccessibilityTestBase>
