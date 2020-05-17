@@ -19,6 +19,7 @@ std::vector<Position> Pacman_exploration_rules::move_actions(const World& world,
     Max_distance<Square_is_accessible_for_pacman> accessibility_test;
     accessibility_test.set_max_distance(max_distance);
     accessibility_test.set_explorer_pacman(*pacman_);
+    accessibility_test.forbidden_positions() = forbidden_positions();
     Torus_directions4_exploration_rules<const World> exploration_rules(world);
     using Mark = Distance_mark<>;
     Mark_grid<Mark> marks;
@@ -28,8 +29,5 @@ std::vector<Position> Pacman_exploration_rules::move_actions(const World& world,
         npos.push_back(position);
     };
     spread_from_start(marks, world, position, exploration_rules, accessibility_test, square_visitor);
-
-    //TODO
-
     return npos;
 }

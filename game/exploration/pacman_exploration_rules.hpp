@@ -25,6 +25,10 @@ public:
         return previous_position;
     }
 
+    inline const std::vector<Position>& forbidden_positions() const { return forbidden_pos_; }
+    inline std::vector<Position>& forbidden_positions() { return forbidden_pos_; }
+
 private:
     const Pacman* pacman_;
+    std::vector<Position> forbidden_pos_;
 };
