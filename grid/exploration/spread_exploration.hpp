@@ -56,17 +56,16 @@ void spread_exploration(const ExplorationPolicy&, MarkGrid& marks, GridWorld& wo
     marks.resize(world.dimension());
     std::queue<Position> position_queue;
 
-    auto treat_square = [&](const Position& pos, Mark& mark_to_update, Mark&& mark)
+    auto mark_square = [&](const Position& pos, Mark& mark_to_update, Mark&& mark)
     {
         position_queue.push(pos);
         mark_to_update = std::move(mark);
-        visit(world, pos, mark_to_update);
     };
 
     for (; root_position_first != root_position_last; ++root_position_first)
     {
         Position root_position = *root_position_first;
-        treat_square(root_position, marks.get(root_position), marks.make_visited_mark(root_position));
+        mark_square(root_position, marks.get(root_position), marks.make_visited_mark(root_position));
     }
 
     while (!position_queue.empty())
@@ -77,6 +76,7 @@ void spread_exploration(const ExplorationPolicy&, MarkGrid& marks, GridWorld& wo
         if (Mark& cmark = marks.get(cpos); !marks.is_treated(cmark))
         {
             marks.set_treated(cmark);
+            visit(world, cpos, cmark);
             if (stop_condition(static_cast<const MarkGrid&>(marks)))
                 break;
 
@@ -93,7 +93,7 @@ void spread_exploration(const ExplorationPolicy&, MarkGrid& marks, GridWorld& wo
                         Mark mark = nmark;
                         marks.set_visited(mark, cpos, cmark, std::forward<decltype(action)>(action));
                         if (accessibility_test(world, npos, mark))
-                            treat_square(npos, nmark, std::move(mark));
+                            mark_square(npos, nmark, std::move(mark));
                     }
             }
         }
